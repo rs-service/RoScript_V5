@@ -4,4 +4,4 @@ Please remind that this is the **OFFICIAL** repository, all others are account s
 # How to execute RoScript V5?
 To execute RoScript V5, copy the script down below:
 
-``loadstring(game:HttpGet("https://github.com/R9OKM/RoScript_V5/raw/main/Script"))()``
+```shared.RoAdmin = false -- Change to "true" to load admin script. loadstring(game:HttpGet("https://github.com/R9OKM/RoScript_V5/raw/main/Script"))()```
