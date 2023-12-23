@@ -1,5 +1,6 @@
 # Hey There!
-Hello! This is the official repository for RoScript Hub.
+Hello! This is the official repository for **RoScript Hub**.
+Please remind that this is the **OFFICIAL** repository, all others are account stealer, etc...
 ## How to execute RoScript V5?
 To execute RoScript V5, copy the script down below:
 ```lua
