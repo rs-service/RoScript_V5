@@ -9,6 +9,8 @@ loadstring(game:HttpGet("https://github.com/R9OKM/RoScript_V5/raw/main/Script"))
 ```
 ## Change Logs:
 ```diff
+[01/14/2024]
++ Fixed RoScript V5 Loader
 [12/25/2023] (🎄)
 + Added Break In
 [12/24/2023]
