@@ -4,11 +4,15 @@ Please remind that this is the **OFFICIAL** repository, all others are account s
 ## How to execute RoScript V5?
 To execute RoScript V5, copy the script down below:
 ```lua
-shared.RoAdmin = false -- Change to "true" to load admin script.
 loadstring(game:HttpGet("https://github.com/R9OKM/RoScript_V5/raw/main/Script"))()
 ```
 ## Change Logs:
 ```diff
+[02/15/2024]
++ Fixed RoScript V5 Loader
+[02/10/2024]
++ Added PTFS
+- Removed RoAdmin
 [01/14/2024]
 + Fixed RoScript V5 Loader
 [12/25/2023] (🎄)
