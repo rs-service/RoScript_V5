@@ -1,13 +1,15 @@
 # Hey There!
 Hello! This is the official repository for **RoScript Hub**.
-Please remind that this is the **OFFICIAL** repository, all others are account stealer, etc...
+Please remember that this is the **OFFICIAL** repository, all others are account stealers, etc...
 ## How to execute RoScript V5?
-To execute RoScript V5, copy the script down below:
+To execute RoScript V5, copy the script below:
 ```lua
 loadstring(game:HttpGet("https://github.com/R9OKM/RoScript_V5/raw/main/Script"))()
 ```
 ## Change Logs:
 ```diff
+[03/02/2024]
++ Added Userscript Bypass
 [02/15/2024]
 + Fixed RoScript V5 Loader
 [02/10/2024]
