@@ -131,7 +131,7 @@ async function codex() {
     let session;
     while (!session) {
         session = localStorage.getItem("android-session");
-        await sleep(1000);
+        await util.sleep(1000);
     }
     if (document?.getElementsByTagName('a')?.length && document.getElementsByTagName('a')[0].innerHTML.includes('Get started')) {
         document.getElementsByTagName('a')[0].click();
