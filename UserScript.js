@@ -224,6 +224,7 @@ async function codex() {
         while (stagesCompleted < stages.length) {
             let stageId = stages[stagesCompleted].uuid;
             let initToken = await initiateStage(stageId);
+            await util.sleep(6000)
             let tokenData = decodeTokenData(initToken);
             let referrer;
             if (tokenData.link.includes('loot-links')) {
