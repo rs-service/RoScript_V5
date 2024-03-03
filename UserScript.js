@@ -255,7 +255,6 @@ async function arceus() {
         let checkpointsDone = 1;
         while (checkpointsDone <= 3) {
             await util.linkvertiseSpoof(`https://spdmteam.com/api/keysystem?step=${checkpointsDone}&advertiser=linkvertise`);
-            
             checkpointsDone++;
         }
         window.location.assign('https://spdmteam.com/key-system-getkey');
