@@ -254,7 +254,7 @@ async function arceus() {
         await fetch(`https://spdmteam.com/api/keysystem?hwid=${hwid}&zone=Europe/Rome&advertiser=linkvertise`, { mode: 'no-cors' });
         let checkpointsDone = 1;
         while (checkpointsDone <= 3) {
-            await linkvertiseSpoof(`https://spdmteam.com/api/keysystem?step=${checkpointsDone}&advertiser=linkvertise`);
+            await util.linkvertiseSpoof(`https://spdmteam.com/api/keysystem?step=${checkpointsDone}&advertiser=linkvertise`);
             await util.sleep(2000)
             checkpointsDone++;
         }
