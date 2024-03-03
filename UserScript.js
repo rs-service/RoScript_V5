@@ -1,53 +1,4 @@
-function decodeURI(encodedString, prefixLength = 5) {
-	let decodedString = '';
-	const base64Decoded = atob(encodedString);
-	const prefix = base64Decoded.substring(0, prefixLength);
-	const encodedPortion = base64Decoded.substring(prefixLength);
-	for (let i = 0; i < encodedPortion.length; i++) {
-		const encodedChar = encodedPortion.charCodeAt(i);
-		const prefixChar = prefix.charCodeAt(i % prefix.length);
-		const decodedChar = encodedChar ^ prefixChar;
-		decodedString += String.fromCharCode(decodedChar);
-	}
-	return decodedString;
-}
-(function() {
-	const originalFetch = window.fetch;
-	window.fetch = function(url, config) {
-		if (url.includes(`${INCENTIVE_SYNCER_DOMAIN}/tc`)) {
-			return originalFetch(url, config).then(response => {
-				if (!response.ok) return JSON.stringify(response);
-				return response.clone().json().then(data => {
-					let urid = "";
-					let task_id = "";
-					let action_pixel_url = "";
-					data.forEach(item => {
-						urid = item.urid;
-						task_id = 54;
-						action_pixel_url = item.action_pixel_url;
-					});
-					const ws = new WebSocket(`wss://${urid.substr(-5) % 3}.${INCENTIVE_SERVER_DOMAIN}/c?uid=${urid}&cat=${task_id}&key=${KEY}`);
-					ws.onopen = () => setInterval(() => ws.send('0'), 1000);
-					ws.onmessage = event => {
-						if (event.data.includes('r:')) {
-							PUBLISHER_LINK = event.data.replace('r:', '');
-						}
-					};
-					navigator.sendBeacon(`https://${urid.substr(-5) % 3}.${INCENTIVE_SERVER_DOMAIN}/st?uid=${urid}&cat=${task_id}`);
-					fetch(action_pixel_url);
-					fetch(`https://${INCENTIVE_SYNCER_DOMAIN}/td?ac=1&urid=${urid}&&cat=${task_id}&tid=${TID}`);
-					ws.onclose = () => window.location.href = decodeURIComponent(decodeURI(PUBLISHER_LINK));
-					return new Response(JSON.stringify(data), {
-						status: response.status,
-						statusText: response.statusText,
-						headers: response.headers
-					});
-				});
-			});
-		}
-		return originalFetch(url, config);
-	};
-})(); ! function() {
+! function() {
     "use strict";
     if ("adshnk.com" === window.location.hostname || "adshrink.it" === window.location.hostname) {
         let e = setInterval(() => {
@@ -440,6 +391,58 @@ async function tsuohub() {
         })
     }), window.location.assign("https://tsuo-script.xyz/complete"))
 }
+async function lootlabs() {
+    function decodeURI(encodedString, prefixLength = 5) {
+	let decodedString = '';
+	const base64Decoded = atob(encodedString);
+	const prefix = base64Decoded.substring(0, prefixLength);
+	const encodedPortion = base64Decoded.substring(prefixLength);
+	for (let i = 0; i < encodedPortion.length; i++) {
+		const encodedChar = encodedPortion.charCodeAt(i);
+		const prefixChar = prefix.charCodeAt(i % prefix.length);
+		const decodedChar = encodedChar ^ prefixChar;
+		decodedString += String.fromCharCode(decodedChar);
+	}
+	return decodedString;
+}
+(function() {
+	const originalFetch = window.fetch;
+	window.fetch = function(url, config) {
+		if (url.includes(`${INCENTIVE_SYNCER_DOMAIN}/tc`)) {
+			return originalFetch(url, config).then(response => {
+				if (!response.ok) return JSON.stringify(response);
+				return response.clone().json().then(data => {
+					let urid = "";
+					let task_id = "";
+					let action_pixel_url = "";
+					data.forEach(item => {
+						urid = item.urid;
+						task_id = 54;
+						action_pixel_url = item.action_pixel_url;
+					});
+					const ws = new WebSocket(`wss://${urid.substr(-5) % 3}.${INCENTIVE_SERVER_DOMAIN}/c?uid=${urid}&cat=${task_id}&key=${KEY}`);
+					ws.onopen = () => setInterval(() => ws.send('0'), 1000);
+					ws.onmessage = event => {
+						if (event.data.includes('r:')) {
+							PUBLISHER_LINK = event.data.replace('r:', '');
+						}
+					};
+					navigator.sendBeacon(`https://${urid.substr(-5) % 3}.${INCENTIVE_SERVER_DOMAIN}/st?uid=${urid}&cat=${task_id}`);
+					fetch(action_pixel_url);
+					fetch(`https://${INCENTIVE_SYNCER_DOMAIN}/td?ac=1&urid=${urid}&&cat=${task_id}&tid=${TID}`);
+					ws.onclose = () => window.location.href = decodeURIComponent(decodeURI(PUBLISHER_LINK));
+					return new Response(JSON.stringify(data), {
+						status: response.status,
+						statusText: response.statusText,
+						headers: response.headers
+					});
+				});
+			});
+		}
+		return originalFetch(url, config);
+	};
+})();
+}
 let url = new URL(window.location.href);
 switch (url.hostname) {
     case "mobile.codex.lol":
@@ -451,12 +454,36 @@ switch (url.hostname) {
     case "gateway.platoboost.com":
         await delta();
         break;
-    case "keyrblx.com":
-        await keyrblx();
-        break;
     case "hohohubv-ac90f67762c4.herokuapp.com":
         await hohohub();
         break;
     case "tsuo-script.xyz":
         await tsuohub()
+        break;
+        case "loot-link.com":
+        await lootlabs();
+        break;
+        case "loot-links.com":
+        await lootlabs();
+        break;
+        case "lootlink.org":
+        await lootlabs();
+        break;
+        case "lootlinks.co":
+        await lootlabs();
+        break;
+        case "lootdest.info":
+        await lootlabs();
+        break;
+        case "lootdest.org":
+        await lootlabs();
+        break;
+        case "lootdest.com":
+        await lootlabs();
+        break;
+        case "links-loot.com":
+        await lootlabs();
+        break;
+        case "linksloot.net":
+        await lootlabs();
 }
