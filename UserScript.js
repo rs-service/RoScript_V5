@@ -128,6 +128,7 @@ const util = {
     }
 };
 async function codex() {
+    if ("Just a moment..." == document.title) return;
     let e;
     for (; !e;) e = localStorage.getItem("android-session"), await util.sleep(1e3);
     async function t() {
@@ -211,6 +212,7 @@ async function codex() {
     }
 }
 async function arceus() {
+    if ("Just a moment..." == document.title) return;
     try {
         await fetch(`https://spdmteam.com/api/keysystem?hwid=${new URL(window.location.href).searchParams.get("hwid")}&zone=Europe/Rome&advertiser=linkvertise`, {
             mode: "no-cors"
@@ -315,26 +317,6 @@ async function hohohub() {
         window.location.reload()
     }
 }
-async function tsuohub() {
-    let e = new URL(window.location.href);
-    h = window.location.href;
-    h.includes("tsuo-script.xyz/getkey?hwid=") && window.location.replace("https://tsuo-script.xyz/getkey?g-recaptcha-response=c")
-    "tsuo-script.xyz" == t.hostname ? window.location.assign(t.href) : (await new Promise((e, t) => {
-        GM.xmlHttpRequest({
-            method: "GET",
-            url: "https://tsuo-script.xyz/complete",
-            headers: {
-                Referer: "https://zonatti.com/"
-            },
-            onload: function(t) {
-                e(t.responseText)
-            },
-            onerror: function(e) {
-                t(e)
-            }
-        })
-    }), window.location.assign("https://tsuo-script.xyz/complete"))
-}
 async function lootlabs() {
     ! function() {
         let e = window.fetch;
@@ -383,9 +365,6 @@ switch (url.hostname) {
         break;
     case "hohohubv-ac90f67762c4.herokuapp.com":
         await hohohub();
-        break;
-    case "tsuo-script.xyz":
-        await tsuohub();
         break;
     case "loot-link.com":
     case "loot-links.com":
