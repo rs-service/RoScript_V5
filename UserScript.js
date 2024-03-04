@@ -214,14 +214,17 @@ async function codex() {
 async function arceus() {
     if ("Just a moment..." == document.title) return;
     try {
-        await fetch(`https://spdmteam.com/api/keysystem?hwid=${new URL(window.location.href).searchParams.get("hwid")}&zone=Europe/Rome&advertiser=linkvertise`, {
-            mode: "no-cors"
-        });
-        let e = 1;
-        for (; e <= 3;) await util.linkvertiseSpoof(`https://spdmteam.com/api/keysystem?step=${e}&advertiser=linkvertise`), e++;
-        window.location.assign("https://spdmteam.com/key-system-getkey")
-    } catch (t) {
-        window.location.reload()
+        let hwid = (new URL(window.location.href)).searchParams.get('hwid');
+        await fetch(`https://spdmteam.com/api/keysystem?hwid=${hwid}&zone=Europe/Rome&advertiser=linkvertise`, { mode: 'no-cors' });
+        let checkpointsDone = 1;
+        while (checkpointsDone <= 3) {
+            await linkvertiseSpoof(`https://spdmteam.com/api/keysystem?step=${checkpointsDone}&advertiser=linkvertise`);
+            checkpointsDone++;
+        }
+        window.location.assign('https://spdmteam.com/key-system-getkey');
+    }
+    catch (e) {
+        window.location.reload();
     }
 }
 async function delta() {
