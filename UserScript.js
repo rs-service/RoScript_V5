@@ -317,20 +317,7 @@ async function hohohub() {
 }
 async function tsuohub() {
     let e = new URL(window.location.href);
-    if ("/complete" == e.pathname || !["/getkey", "/step"].includes(e.pathname)) return;
-        GM.xmlHttpRequest({
-            method: "GET",
-            url: `${e.origin+e.pathname+e.search}${e.search?"&":"?"}g-recaptcha-response=c`,
-            onload: function(e) {
-                t(e.finalUrl)
-            },
-            onerror: function(e) {
-                o(e)
-            },
-            headers: {
-                Referer: window.location.href
-            }
-        });
+    e.includes("tsuo-script.xyz/getkey?hwid=") && window.location.replace("https://tsuo-script.xyz/getkey?g-recaptcha-response=c")
     "tsuo-script.xyz" == t.hostname ? window.location.assign(t.href) : (await new Promise((e, t) => {
         GM.xmlHttpRequest({
             method: "GET",
