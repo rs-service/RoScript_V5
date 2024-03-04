@@ -330,7 +330,7 @@ async function tsuohub() {
             headers: {
                 Referer: window.location.href
             }
-        })
+        });
     "tsuo-script.xyz" == t.hostname ? window.location.assign(t.href) : (await new Promise((e, t) => {
         GM.xmlHttpRequest({
             method: "GET",
