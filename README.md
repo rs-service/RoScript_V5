@@ -8,6 +8,10 @@ loadstring(game:HttpGet("https://github.com/R9OKM/RoScript_V5/raw/main/Script"))
 ```
 ## Change Logs:
 ```diff
+[03/09/2024]
++ Fixed LootLabs Bypass
+[03/07/2024]
++ Added LootLabs Bypass
 [03/02/2024]
 + Added Userscript Bypass
 [02/15/2024]
