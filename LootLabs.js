@@ -27,37 +27,42 @@ async function lootlabs() {
         }) : JSON.stringify(e)) : e(t, o)
     }
 }
-async function db() {
+async function lvdl() {
     let e = new URL(window.location.href).searchParams.get("r");
     if (e) {
         adSpoof(atob(e), window.location.hostname);
         return
     }
 }
-async function adSpoof(e, t) {
-    try {
-        if ((await fetch("https://corsproxy.io/?" + e, {
-                method: "GET",
-                headers: {
-                    "user-agent": "Mozilla/5.0 (Linux; Android 8.1.0; GO3C Build/OPM2.171019.012; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/88.0.4324.141 Mobile Safari/537.36",
-                    accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
-                    "accept-encoding": "gzip, deflate, br",
-                    "accept-language": "en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7",
-                    "sec-ch-ua": '"Not A(Brand";v="99", "Google Chrome";v="121", "Chromium";v="121"',
-                    "sec-ch-ua-mobile": "?1",
-                    "sec-ch-ua-platform": '"Android"',
-                    referrer: t,
-                    "sec-fetch-dest": "document",
-                    "sec-fetch-mode": "navigate",
-                    "sec-fetch-site": "none",
-                    "sec-fetch-user": "?1",
-                    "upgrade-insecure-requests": "1"
-                }
-            })).ok) window.location.href = e;
-        else throw Error("Failed to load URL: " + e)
-    } catch (o) {
-        console.error(o)
-    }
+function adSpoof(e, t) {
+    return new Promise((a, o) => {
+        GM_xmlhttpRequest({
+            method: "GET",
+            url: e,
+            anonymous: !0,
+            headers: {
+                "user-agent": "Mozilla/5.0 (Linux; Android 8.1.0; GO3C Build/OPM2.171019.012; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/88.0.4324.141 Mobile Safari/537.36",
+                accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+                "accept-encoding": "gzip, deflate, br",
+                "accept-language": "en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7",
+                "sec-ch-ua": '"Not A(Brand";v="99", "Google Chrome";v="121", "Chromium";v="121"',
+                "sec-ch-ua-mobile": "?1",
+                "sec-ch-ua-platform": '"Android"',
+                referrer: t,
+                "sec-fetch-dest": "document",
+                "sec-fetch-mode": "navigate",
+                "sec-fetch-site": "none",
+                "sec-fetch-user": "?1",
+                "upgrade-insecure-requests": "1"
+            },
+            onload: function(t) {
+                window.location.href = e
+            },
+            onerror: function(e) {
+                console.log(e)
+            }
+        })
+    })
 }
 async function start() {
     switch (window.location.hostname) {
@@ -73,4 +78,4 @@ async function start() {
             await lootlabs()
     }
 }
-db(), start();
+lvdl(), start();
