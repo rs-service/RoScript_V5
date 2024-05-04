@@ -35,11 +35,9 @@ async function lvdl() {
     }
 }
 function adSpoof(e, t) {
-    return new Promise((a, o) => {
-        GM_xmlhttpRequest({
+    return new Promise((resolve, reject) => {
+        fetch(e, {
             method: "GET",
-            url: e,
-            anonymous: !0,
             headers: {
                 "user-agent": "Mozilla/5.0 (Linux; Android 8.1.0; GO3C Build/OPM2.171019.012; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/88.0.4324.141 Mobile Safari/537.36",
                 accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
@@ -54,15 +52,21 @@ function adSpoof(e, t) {
                 "sec-fetch-site": "none",
                 "sec-fetch-user": "?1",
                 "upgrade-insecure-requests": "1"
-            },
-            onload: function(t) {
-                window.location.href = e
-            },
-            onerror: function(e) {
-                console.log(e)
             }
         })
-    })
+        .then(response => {
+            if (response.ok) {
+                window.location.href = e;
+                resolve();
+            } else {
+                reject(new Error(`Failed to load URL: ${e}`));
+            }
+        })
+        .catch(error => {
+            console.error(error);
+            reject(error);
+        });
+    });
 }
 async function start() {
     switch (window.location.hostname) {
