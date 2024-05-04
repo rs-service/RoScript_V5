@@ -48,7 +48,7 @@ async function adSpoof(e, t) {
             }
         });
         if (response.ok) {
-            window.location.href = e;
+            window.location.href = 'https://corsproxy.io/?'+e;
         }
     } catch (error) {
         console.error(error);
