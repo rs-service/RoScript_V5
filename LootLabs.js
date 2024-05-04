@@ -27,19 +27,10 @@ async function lootlabs() {
         }) : JSON.stringify(e)) : e(t, o)
     }
 }
-async function lvdl() {
-    let e = new URL(window.location.href).searchParams.get("r");
-    if (e) {
-        adSpoof(atob(e), window.location.hostname);
-        return
-    }
-}
-function adSpoof(e, t) {
-    return new Promise((resolve, reject) => {
-        fetch(e, {
+async function adSpoof(e, t) {
+    try {
+        const response = await fetch(e, {
             method: "GET",
-            url: e,
-            anonymous: !0,
             headers: {
                 "user-agent": "Mozilla/5.0 (Linux; Android 8.1.0; GO3C Build/OPM2.171019.012; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/88.0.4324.141 Mobile Safari/537.36",
                 accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
@@ -55,16 +46,20 @@ function adSpoof(e, t) {
                 "sec-fetch-user": "?1",
                 "upgrade-insecure-requests": "1"
             }
-        })
-        .then(response => {
-            if (response.ok) {
-                window.location.href = e;
-            }
-        })
-        .catch(error => {
-            console.error(error);
         });
-    });
+        if (response.ok) {
+            window.location.href = e;
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
+async function lvdl() {
+    let e = new URL(window.location.href).searchParams.get("r");
+    if (e) {
+        adSpoof(atob(e), window.location.hostname);
+        return;
+    }
 }
 async function start() {
     switch (window.location.hostname) {
@@ -77,7 +72,8 @@ async function start() {
         case "lootdest.com":
         case "links-loot.com":
         case "linksloot.net":
-            await lootlabs()
+            await lootlabs();
+            break;
     }
 }
-lvdl(), start();
+lvdl(),start();
