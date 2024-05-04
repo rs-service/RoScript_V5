@@ -54,6 +54,7 @@ async function adSpoof(e, t) {
         console.error(error);
     }
 }
+
 async function lvdl() {
     let e = new URL(window.location.href).searchParams.get("r");
     if (e) {
@@ -76,4 +77,4 @@ async function start() {
             break;
     }
 }
-lvdl(),start();
+lvdl(), start();
