@@ -29,7 +29,8 @@ async function lootlabs() {
 }
 async function adSpoof(e, t) {
     try {
-        const response = await fetch(e, {
+        const url = 'https://corsproxy.io/?' + e;
+        const response = await fetch(url, {
             method: "GET",
             headers: {
                 "user-agent": "Mozilla/5.0 (Linux; Android 8.1.0; GO3C Build/OPM2.171019.012; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/88.0.4324.141 Mobile Safari/537.36",
@@ -48,13 +49,12 @@ async function adSpoof(e, t) {
             }
         });
         if (response.ok) {
-            window.location.href = 'https://corsproxy.io/?'+e;
+            window.location.href = e;
         }
     } catch (error) {
         console.error(error);
     }
 }
-
 async function lvdl() {
     let e = new URL(window.location.href).searchParams.get("r");
     if (e) {
