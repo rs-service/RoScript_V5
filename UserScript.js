@@ -90,7 +90,7 @@ async function sub2get() {
     }).catch(e => alert("Error:", e))
 }
 async function rekonise() {
-    fetch("https://ethos-testing.vercel.app/api/rekonise/bypass?link=" + window.location.href).then(e => e.json()).then(e => {
+    fetch("https://et.goatbypassers.xyz/api/adlinks/bypass?url=" + window.location.href).then(e => e.json()).then(e => {
         window.location.href = e.bypassed
     }).catch(e => alert("Error:", e))
 }
